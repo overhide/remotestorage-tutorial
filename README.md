@@ -14,7 +14,7 @@ With the help of the [remoteStorage.js](https://www.npmjs.com/package/remotestor
 
 
 
-![](./.assets/intro.png)
+![](./assets/intro.png)
 
 
 
