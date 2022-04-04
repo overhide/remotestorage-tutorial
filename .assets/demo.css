@@ -1,6 +1,9 @@
-button {
+.w3-button {
   width: 80%;
   padding: 1em !important;
+}
+.rs-button {
+  height: 100%;
 }
 .centered {
   display: flex; 
