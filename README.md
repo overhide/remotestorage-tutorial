@@ -4,13 +4,13 @@
 
 This tutorial will cover how to very easily make an offline-first Web application without being responsible for your user's data nor back-end maintenance.
 
-We start by learning how to leverage [Remote Storage](https://remotestorage.io/) (RS) &mdash; which gives us everything but the ability to make money.  Later on we switch focus to an RS extension that, just as easily as the rest of RS, allows us to offer in-app purchases.  Why switch focus to having an app that makes money?  So you can keep the lights on and have time to make more apps, of course.
+We start by learning how to leverage <a target="_blank" href="https://remotestorage.io/">Remote Storage</a> (RS) &mdash; which gives us everything but the ability to make money.  Later on we switch focus to an RS extension that, just as easily as the rest of RS, allows us to offer in-app purchases.  Why switch focus to having an app that makes money?  So you can keep the lights on and have time to make more apps, of course.
 
 
 
-[Remote Storage](https://remotestorage.io/) (RS) is a community derived effort [that's many things](https://remotestoragejs.readthedocs.io/en/latest/why.html).  Most of which are easily demonstrable with this here hands-on tutorial.
+<a target="_blank" href="https://remotestorage.io/">Remote Storage</a> (RS) is a community derived effort <a target="_blank" href="https://remotestoragejs.readthedocs.io/en/latest/why.html">that's many things</a>.  Most of which are easily demonstrable with this here hands-on tutorial.
 
-With the help of the [remoteStorage.js](https://www.npmjs.com/package/remotestoragejs) NPM library RS becomes an offline-first back-end for your Web application.  Offline-first as your users' data is synced with the back-end when they're online but leverages browsers' local-storage when they're disconnected.  All without any effort from you, the app developer.
+With the help of the <a target="_blank" href="https://www.npmjs.com/package/remotestoragejs">remoteStorage.js</a> NPM library RS becomes an offline-first back-end for your Web application.  Offline-first as your users' data is synced with the back-end when they're online but leverages browsers' local-storage when they're disconnected.  All without any effort from you, the app developer.
 
 
 
@@ -18,19 +18,19 @@ With the help of the [remoteStorage.js](https://www.npmjs.com/package/remotestor
 
 
 
-The RS ecosystem is a Bring-Your-Own-Data (BYOD) [un-hosted](https://unhosted.org/) concept:  your users authenticate and authorize with any of the RS hosts in the ecosystem, or their own, and connect to your application with their data, that they bring from the RS provider of their choosing.  You, the app developer, don't own and are not responsible for their data.  They, your users, have freedom of where their data lives and how safe it is.  For all intents and purposes the RS provider can be a public offering such as [overhide.io](https://rs.overhide.io) or [other RS servers](https://remotestorage.io/servers/), or the user's self-hosted system.
+The RS ecosystem is a Bring-Your-Own-Data (BYOD) <a target="_blank" href="https://unhosted.org/">un-hosted</a> concept:  your users authenticate and authorize with any of the RS hosts in the ecosystem, or their own, and connect to your application with their data, that they bring from the RS provider of their choosing.  You, the app developer, don't own and are not responsible for their data.  They, your users, have freedom of where their data lives and how safe it is.  For all intents and purposes the RS provider can be a public offering such as <a target="_blank" href="https://rs.overhide.io">overhide.io</a> or <a target="_blank" href="https://remotestorage.io/servers/">other RS servers</a>, or the user's self-hosted system.
 
-If you're into devops, the RS ecosystem is an ecosystem of self-hosted clusters that are stood up by the community for everyone to use.  You can stand up a private cluster just for your app or for the public.  You can provide RS storage for free or charge a fee in dollars or ethers.  To stand up a paid server look no further than the [Lucchetto RS server](https://github.com/overhide/armadietto/blob/master/lucchetto/README.md), batteries included.
+If you're into devops, the RS ecosystem is an ecosystem of self-hosted clusters that are stood up by the community for everyone to use.  You can stand up a private cluster just for your app or for the public.  You can provide RS storage for free or charge a fee in dollars or ethers.  To stand up a paid server look no further than the <a target="_blank" href="https://github.com/overhide/armadietto/blob/master/lucchetto/README.md">Lucchetto RS server</a>, batteries included.
 
 All the code is Free Open-Source Software (FOSS).  The community is strongly pro-openness and empowering data self-ownership.
 
-The first part of the tutorial is a hands-on materialization of all of the above in a simplistic Web app.  In the second part we will extend our example to enable in-app purchases.  We will leverage RS &mdash; albeit with the [Lucchetto bolt-on](https://www.npmjs.com/package/lucchetto) &mdash; to easily receive payments in dollars and cryptos for a an optional feature.
+The first part of the tutorial is a hands-on materialization of all of the above in a simplistic Web app.  In the second part we will extend our example to enable in-app purchases.  We will leverage RS &mdash; albeit with the <a target="_blank" href="https://www.npmjs.com/package/lucchetto">Lucchetto bolt-on</a> &mdash; to easily receive payments in dollars and cryptos for a an optional feature.
 
 
 
 ------
 
-Questions, comments?  Let's discuss at [RS forums](https://community.remotestorage.io/) or [r/overhide](https://www.reddit.com/r/overhide/).
+Questions, comments?  Let's discuss at <a target="_blank" href="https://community.remotestorage.io/">RS forums</a> or <a target="_blank" href="https://www.reddit.com/r/overhide/">r/overhide</a>.
 
 ------
 
@@ -38,7 +38,7 @@ Questions, comments?  Let's discuss at [RS forums](https://community.remotestora
 
 ## Simple Code Listings
 
-To follow along you need to be comfortable with basic HTML, JavaScript as it relates to the DOM, [git](https://git-scm.com/), and [npm](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm).  
+To follow along you need to be comfortable with basic HTML, JavaScript as it relates to the DOM, <a target="_blank" href="https://git-scm.com/">git</a>, and <a target="_blank" href="https://docs.npmjs.com/downloading-and-installing-node-js-and-npm">npm</a>.  
 
 For brevity, full code listings are not part of this write-up, but are referenced in each section from the code callouts:
 
@@ -103,8 +103,6 @@ With reference to the <a target="_blank" href="https://github.com/overhide/remot
 <button ... onClick="setState({...appstate, cake_choice: 'Tiramisu'})">Set "Tiramisu"</button>
 ```
 <p align = "center">1-rs.html :: lines 32-38</p><br/>
-
-
 The `setState` global function simply sets cake names to the `client`:
 
 
@@ -116,8 +114,6 @@ function setState(newState) {
 ```
 
 <p align = "center">1-rs.html :: lines 94-96</p><br/>
-
-
 The parameters simply state, some object `newState` matching the JSON schema `'appstate'` should be stored as a JSON object at the path `'/appstate'`.  The pathing and schemas should make sense shortly.
 
 Firstly, the `client` is our application's state store, initialized earlier in the code:
@@ -125,14 +121,13 @@ Firstly, the `client` is our application's state store, initialized earlier in t
 
 
 ```
-![one-way](C:\jj\src\remotestorage-tutorial\assets\one-way.png)const remoteStorage = new RemoteStorage({changeEvents: { local: true, window: true }});
+const remoteStorage = new RemoteStorage({changeEvents: { local: true, window: true }});
 remoteStorage.access.claim('remotestorage-tutorial', 'rw');     
 ...
 const client = remoteStorage.scope('/remotestorage-tutorial/');
 ```
 
 <p align = "center">1-rs.html :: lines 65-68</p><br/>
-
 >  For the full documentation on `RemoteStorage` construction and `client` instantiation read the docs:
 >
 > - https://remotestoragejs.readthedocs.io/en/latest/js-api/remotestorage.html
@@ -172,8 +167,6 @@ client.on('change', (event) => {
 ```
 
 <p align = "center">1-rs.html :: lines 82-87</p><br/>
-
-
 Here we're registering an event handler against the `client`.  This code will get called on every local in-browser or remote change to any object under our previously registered scope (path).
 
 In our handler above we're only interested in changes to the `/appstate` path.
@@ -198,11 +191,11 @@ What we're also transparently achieving is reliable storage of the app's state i
 
 Let's connect to a *remote-storage* server to ensure we sync our application changes outside of our current browser.
 
-For this tutorial we will use the [@test.rs.overhide.io](https://test.rs.overhide.io) server, but [there are others](https://remotestorage.io/servers/).
+For this tutorial we will use the <a target="_blank" href="https://test.rs.overhide.io">@test.rs.overhide.io</a> server, but <a target="_blank" href="https://remotestorage.io/servers/">there are others</a>.
 
-[@test.rs.overhide.io](https://test.rs.overhide.io) is a free *remote-storage* server meant for testing and playing around.  It pretends to require money but it's all fake make-pretend US dollar transactions and testnet Ethereum transactions.
+<a target="_blank" href="https://test.rs.overhide.io">@test.rs.overhide.io</a> is a free *remote-storage* server meant for testing and playing around.  It pretends to require money but it's all fake make-pretend US dollar transactions and testnet Ethereum transactions.
 
-You can stand up the exact same server on your own machine from the [Armadietto+Lucchetto](https://github.com/overhide/armadietto) repository, or just use [@test.rs.overhide.io](https://test.rs.overhide.io) for now.
+You can stand up the exact same server on your own machine from the <a target="_blank" href="https://github.com/overhide/armadietto">Armadietto+Lucchetto</a> repository, or just use <a target="_blank" href="https://test.rs.overhide.io">@test.rs.overhide.io</a> for now.
 
 Click on the *remote-storage* widget to start logging in:
 
@@ -242,7 +235,7 @@ Enter fake information in the fields as per the instructions on screen:
 
 Now you're back in our cake example app and you're connected with your newly acquired *remote-storage*.
 
-You can use the exact same storage in [any other RS application](https://remotestorage.io/apps/).  Hope you saved off your secret token!  Your browser should remember, but other browsers won't.
+You can use the exact same storage in <a target="_blank" href="https://remotestorage.io/apps/">any other RS application</a>.  Hope you saved off your secret token!  Your browser should remember, but other browsers won't.
 
 To make your life easier, your best bet is to likely use social login providers on that login screen, or an Ethereum wallet if you can connect it.  Play around with the various options.
 
@@ -261,7 +254,6 @@ client.storeObject('appstate', '/appstate', newState);
 ```
 
 <p align = "center">1-rs.html :: line 95</p><br/>
-
 We mentioned that the first parameter `'appstate'` indicates the JSON schema expected of the third parameter.  This JSON schema is registered against the `client`:
 
 ``` 
@@ -279,7 +271,6 @@ client.declareType('appstate', appstate_schema);
 ```
 
 <p align = "center">1-rs.html :: lines 49-57 and 77</p><br/>
-
 The `'appstate'` schema with the value from `newState` is saved under the path `/appstate`, which is a path relative to the scope path of our `client`.  Hence we can think of the object being at `/remotestorage-tutorial/appstate`.
 
 
@@ -308,11 +299,11 @@ The new option to "Buy Cake NFT" for $3 provides a nice value-add to your custom
 
 The action of this button will differ based on several factors of your user's *remote-storage* connection.  At the end of the day, however, the button will authorize, subsequently trigger an event, prompting our app to download a piece of data that's behind a $3 paywall.  This is a piece of data that we &mdash; the app developers &mdash; setup (well, I setup for this example).  It's not part of the user's data, it's from the developer's *remote-storage*. 
 
-If you're following along as the user that just logged into the [@test.rs.overhide.io](https://test.rs.overhide.io) *remote-storage*, then you should still be logged into this new page with your valid *remote-storage* connection:  it's the same domain hence the same token authorizes.  Since [@test.rs.overhide.io](https://test.rs.overhide.io) is a so called *Lucchetto* extended RS server &mdash; meaning it plays nice with this new in-app purchase button from the https://pay2my.app widgets &mdash; our click-through should be seamless.  We'll just need to top-up the $3 for the new IAP.
+If you're following along as the user that just logged into the <a target="_blank" href="https://test.rs.overhide.io">@test.rs.overhide.io</a> *remote-storage*, then you should still be logged into this new page with your valid *remote-storage* connection:  it's the same domain hence the same token authorizes.  Since <a target="_blank" href="https://test.rs.overhide.io">@test.rs.overhide.io</a> is a so called *Lucchetto* extended RS server &mdash; meaning it plays nice with this new in-app purchase button from the https://pay2my.app widgets &mdash; our click-through should be seamless.  We'll just need to top-up the $3 for the new IAP.
 
 Why are we paying again?
 
-Keep in mind that the earlier $1.99 payment was to the [@test.rs.overhide.io](https://test.rs.overhide.io) *remote-storage* provider:  for the storage.  This $3 payment is for the extra in-app value add.
+Keep in mind that the earlier $1.99 payment was to the <a target="_blank" href="https://test.rs.overhide.io">@test.rs.overhide.io</a> *remote-storage* provider:  for the storage.  This $3 payment is for the extra in-app value add.
 
 
 
@@ -336,12 +327,11 @@ window.addEventListener('pay2myapp-appsell-sku-clicked', async (event) => {
 ```
 
 <p align = "center">2-iaps.html :: lines 140-147</p><br/>
-
-The `'pay2myapp-appsell-sku-clicked` event comes from the https://pay2my.app widgets, which are the same widgets providing authentication and authorization in our [@test.rs.overhide.io](https://test.rs.overhide.io) server earlier.  
-
+The `'pay2myapp-appsell-sku-clicked` event comes from the https://pay2my.app widgets, which are the same widgets providing authentication and authorization in our <a target="_blank" href="https://test.rs.overhide.io">@test.rs.overhide.io</a> server earlier.  
 
 
-> The `pay2myapp-appsell-sku-clicked` event is documented as part of the [pay2myapp-appsell](https://github.com/overhide/pay2my.app#pay2myapp-appsell-) Web component.  
+
+> The `pay2myapp-appsell-sku-clicked` event is documented as part of the <a target="_blank" href="https://github.com/overhide/pay2my.app#pay2myapp-appsell-">pay2myapp-appsell</a> Web component.  
 
 
 
@@ -350,6 +340,10 @@ Reading the handler code above, we use the `event` to retrieve a `result` via `l
 
 
 > Keep in mind, the `lucchetto.getSku(..)` uses your &mdash; the app developers &mdash; *Lucchetto* RS connection to get paywall data, hence your RS server's connection string needs to be provided.  The `event.detail` object provides the chosen ledger's `from` (client) and `to` (your) addresses, and the user's `signature` for some `message`, essentially all that's needed for the *Lucchetto* RS server to validate authentication and payments on the ledger:  it's not sufficient to have this done in the browser, the RS server validates for itself.
+>
+> 
+>
+> ![](assets/iaps.png)
 
 
 
@@ -364,8 +358,7 @@ const lucchetto = new Lucchetto(remoteStorage, true, document.getElementById('de
 ```
 
 <p align = "center">2-iaps.html :: line 105</p><br/>
-
-When initializing `lucchetto` we provide the constructor with the *remote-storage* instance we normally use, `remoteStorage`.  The second parameter, the `true` boolean, indicates we're using testnets.  In a live production system you'd set this to `false`.  Finally, the last parameter is the `HTMLElement` reference of the [pay2myapp-hub](https://github.com/overhide/pay2my.app#pay2myapp-hub-) Web component.  You do not need to concern yourself with the nitty gritty, but let's look at the three Web components now.
+When initializing `lucchetto` we provide the constructor with the *remote-storage* instance we normally use, `remoteStorage`.  The second parameter, the `true` boolean, indicates we're using testnets.  In a live production system you'd set this to `false`.  Finally, the last parameter is the `HTMLElement` reference of the <a target="_blank" href="https://github.com/overhide/pay2my.app#pay2myapp-hub-">pay2myapp-hub</a> Web component.  You do not need to concern yourself with the nitty gritty, but let's look at the three Web components now.
 
 
 
@@ -393,8 +386,7 @@ When initializing `lucchetto` we provide the constructor with the *remote-storag
 ```
 
 <p align = "center">2-iaps.html :: lines 55-74</p><br/>
-
-The first Web component is the before mentioned [pay2myapp-hub](https://github.com/overhide/pay2my.app#pay2myapp-hub-).  It's labelled with an ID `"demo-hub"` so it can be referenced from the other components ([or programatically](https://github.com/overhide/pay2my.app#setting-the-pay2myapp-hub-programatically) in bigger apps with frameworks).  The hub is the main component that communicates with ledgers and services all the other components.  The `isTest`  attribute specifies that the hub will communicate with testnet ledgers.  Leave this attribute out for production deployments.  The `noCache` attribute asks the system not to cache credentials:  considering we use *remote-storage* to do that for us.  Finally, the hub is provided with an `apiKey`.  An `apiKey` is your, the developer's, key to access the ledgers.  It's not a big deal to get an API key and there aren't really any restrictions besides the normal rate limits (see https://pay2my.app).  
+The first Web component is the before mentioned <a target="_blank" href="https://github.com/overhide/pay2my.app#pay2myapp-hub-">pay2myapp-hub</a>.  It's labelled with an ID `"demo-hub"` so it can be referenced from the other components (<a target="_blank" href="https://github.com/overhide/pay2my.app#setting-the-pay2myapp-hub-programatically">or programatically</a> in bigger apps with frameworks).  The hub is the main component that communicates with ledgers and services all the other components.  The `isTest`  attribute specifies that the hub will communicate with testnet ledgers.  Leave this attribute out for production deployments.  The `noCache` attribute asks the system not to cache credentials:  considering we use *remote-storage* to do that for us.  Finally, the hub is provided with an `apiKey`.  An `apiKey` is your, the developer's, key to access the ledgers.  It's not a big deal to get an API key and there aren't really any restrictions besides the normal rate limits (see https://pay2my.app).  
 
 
 
@@ -412,7 +404,7 @@ The `ethereumAddress` and `overhideAddress` are both Ethereum public addresses u
 
 
 
-> There are many more configurations of these buttons as described in the [pay2myapp-appsell](https://github.com/overhide/pay2my.app#pay2myapp-appsell-) documentation.  Even more cryptos such as Bitcoin, and growing.  But for *Lucchetto* RS we only focus on cryptos within the Ethereum address space.
+> There are many more configurations of these buttons as described in the <a target="_blank" href="https://github.com/overhide/pay2my.app#pay2myapp-appsell-">pay2myapp-appsell</a> documentation.  Even more cryptos such as Bitcoin, and growing.  But for *Lucchetto* RS we only focus on cryptos within the Ethereum address space.
 
 
 
@@ -430,16 +422,15 @@ Let me describe what I did to make this address of `0xd6106c445A07a6A1caF02FC805
 ```
 
 <p align = "center">2-iaps.html :: lines 72-73</p><br/>
-
 The process is the same for mainnet/prod/live as for testnet/fake, except with different networks.  
 
-First and foremost I setup the [MetaMask](https://metamask.io/) wallet in my browser and one of my Ethereum addresses is `0xd6106c445A07a6A1caF02FC8050F1FDe30d7cE8b`.  
+First and foremost I setup the <a target="_blank" href="https://metamask.io/">MetaMask</a> wallet in my browser and one of my Ethereum addresses is `0xd6106c445A07a6A1caF02FC8050F1FDe30d7cE8b`.  
 
 By virtue of having this address, I'm already setup to receive ethers.  I just need to provide this address for `ethereumAddress`.
 
 For US dollars it's a bit more involved as we need to connect this Ethereum address to a Stripe.com account.
 
-We point our browser at [testnet onboarding](https://test.ledger.overhide.io/onboard) and start the onboarding.  I connected my [MetaMask](https://metamask.io/) wallet to the onboarding page so I can use its addresses.  
+We point our browser at <a target="_blank" href="https://test.ledger.overhide.io/onboard">testnet onboarding</a> and start the onboarding.  I connected my <a target="_blank" href="https://metamask.io/">MetaMask</a> wallet to the onboarding page so I can use its addresses.  
 
 Once clicked through to the Stripe.com account simply skip the form:  unfortunately when you're ready for production you cannot just skip this Stripe.com part of onboarding.
 
@@ -447,41 +438,41 @@ Once clicked through to the Stripe.com account simply skip the form:  unfortunat
 
 
 
-Once onboarded, the [overhide US dollars ledger](https://overhide.io) will record US dollars payments through Stripe.com between your users' addresses and your onboarded address, enabling *Ledger-Based Authorizations*.
+Once onboarded, the <a target="_blank" href="https://overhide.io">overhide US dollars ledger</a> will record US dollars payments through Stripe.com between your users' addresses and your onboarded address, enabling *Ledger-Based Authorizations*.
 
 
 
 > For production onboarding with Ethereum simply use the same address, but with the *mainnet*.
 >
-> For the *overhide* US dollars ledger you'll need to do a full onboarding with [the production flow](https://ledger.overhide.io/onboard).
+> For the *overhide* US dollars ledger you'll need to do a full onboarding with <a target="_blank" href="https://ledger.overhide.io/onboard">the production flow</a>.
 
 
 
 Now we're onboarded.  We know how these addresses factor in.  But what about the SKU data?
 
-If you recall earlier, upon authorization, we retrieved data via `lucchetto.getSku(..)`.  Before that we created a [pay2myapp-appsell](https://github.com/overhide/pay2my.app#pay2myapp-appsell-) button specifying the `sku` and `priceDollars`.
+If you recall earlier, upon authorization, we retrieved data via `lucchetto.getSku(..)`.  Before that we created a <a target="_blank" href="https://github.com/overhide/pay2my.app#pay2myapp-appsell-">pay2myapp-appsell</a> button specifying the `sku` and `priceDollars`.
 
 How do we set this up?
 
-Turns out the SKUs are simply *remote-storage* stored pieces of `plain/text` data served by *Lucchetto* extended RS servers, such as  [@test.rs.overhide.io](https://test.rs.overhide.io).  
+Turns out the SKUs are simply *remote-storage* stored pieces of `plain/text` data served by *Lucchetto* extended RS servers, such as  <a target="_blank" href="https://test.rs.overhide.io">@test.rs.overhide.io</a>.  
 
-To configure them we simply need to [use a RS app](https://overhide.github.io/armadietto/lucchetto/onboard.html#).
+To configure them we simply need to <a target="_blank" href="https://overhide.github.io/armadietto/lucchetto/onboard.html#">use a RS app</a>.
 
 
 
 > As of this writing...
 >
-> Configure your testnet SKUs with  [@test.rs.overhide.io](https://test.rs.overhide.io)..
+> Configure your testnet SKUs with  <a target="_blank" href="https://test.rs.overhide.io">@test.rs.overhide.io</a>..
 >
-> Configure your production SKUs with  [@rs.overhide.io](https://rs.overhide.io).
+> Configure your production SKUs with  <a target="_blank" href="https://rs.overhide.io">@rs.overhide.io</a>.
 >
-> Check [the RS servers page](https://remotestorage.io/servers/) for more options, if any.
+> Check <a target="_blank" href="https://remotestorage.io/servers/">the RS servers page</a> for more options, if any.
 
 
 
-The [Lucchetto SKU onboard app](https://overhide.github.io/armadietto/lucchetto/onboard.html#) should be self explanatory.  You connect to a *Lucchetto* extended RS server such as one of the above listed.  The connected address must match the `ethereumAddress` and the `overhideAddress`.  If you made them different, you'll need to maintain separate RS connections to manage your SKUs.  For sanity, likely best to keep them the same.
+The <a target="_blank" href="https://overhide.github.io/armadietto/lucchetto/onboard.html#">Lucchetto SKU onboard app</a> should be self explanatory.  You connect to a *Lucchetto* extended RS server such as one of the above listed.  The connected address must match the `ethereumAddress` and the `overhideAddress`.  If you made them different, you'll need to maintain separate RS connections to manage your SKUs.  For sanity, likely best to keep them the same.
 
-In my case, I'd connect <a target="_blank" href="https://overhide.github.io/armadietto/lucchetto/onboard.html#">the app</a> to  [@test.rs.overhide.io](https://test.rs.overhide.io) with `0xd6106c445A07a6A1caF02FC8050F1FDe30d7cE8b` from my crypto wallet.
+In my case, I'd connect <a target="_blank" href="https://overhide.github.io/armadietto/lucchetto/onboard.html#">the app</a> to  <a target="_blank" href="https://test.rs.overhide.io">@test.rs.overhide.io</a> with `0xd6106c445A07a6A1caF02FC8050F1FDe30d7cE8b` from my crypto wallet.
 
 Once connected <a target="_blank" href="https://overhide.github.io/armadietto/lucchetto/onboard.html#">the app</a> lets you list existing SKUs, delete them, but most important, insert new ones using the "UPSERT" card.  Simply fill in the *price*, `3` in our case ($3), the *within*, `0` in our case (indefinite), and the *SKU*, `buy-nft` in our case, all matching our button.  Finally, set the *data*, which is the content returned from the `lucchetto.getSku(..)` call.  For our purposes, I set  it to `The cake is a lie!`.
 
