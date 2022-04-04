@@ -148,10 +148,10 @@
 
     // This event fires whenever we're asked to topup funds.
     // We're using it here to show the VISA instructional helper image.
-    window.addEventListener('pay2myapp-hub-pending-transaction',(e) => { 
-      console.log(`pending-transaction :: ${JSON.stringify(e.detail, null, 2)}`);
-      if (e.detail.currency == 'dollars') {
-        document.querySelector("#visa").style.opacity = e.detail.isPending ? "1" : "0";
+    window.addEventListener('pay2myapp-hub-pending-transaction',(event) => { 
+      console.log(`pending-transaction :: ${JSON.stringify(event.detail, null, 2)}`);
+      if (event.detail.currency == 'dollars') {
+        document.querySelector("#visa").style.opacity = event.detail.isPending ? "1" : "0";
       }
     }, false);
 

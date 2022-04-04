@@ -296,7 +296,7 @@ Now that we're comfortable leveraging *Remote Storage* to drive and cache our ap
 
 
 
-The main difference now is the in-app purchase button offered to your users at the bottom of our app, as per the new <a target="_blank" href="https://overhide.github.io/remotestorage-tutorial/2-iaps.html">RENDERED PRVIEW</a>:
+The main difference now is the grey in-app purchase button offered to your users at the bottom of our app, as per the new <a target="_blank" href="https://overhide.github.io/remotestorage-tutorial/2-iaps.html">RENDERED PRVIEW</a>:
 
 
 
@@ -304,11 +304,11 @@ The main difference now is the in-app purchase button offered to your users at t
 
 
 
-The new "Buy Cake NFT" for $3 provides a nice value-add to your customer.
+The new option to "Buy Cake NFT" for $3 provides a nice value-add to your customer.
 
-The action of this button will differ based on several factors of your user's *remote-storage* connection.  At the end of the day, however, the button will authorize, subsequently trigger an event, prompting our app to download a piece of data that we &mdash; the app developers &mdash; setup (well, I setup for this example).
+The action of this button will differ based on several factors of your user's *remote-storage* connection.  At the end of the day, however, the button will authorize, subsequently trigger an event, prompting our app to download a piece of data that's behind a $3 paywall.  This is a piece of data that we &mdash; the app developers &mdash; setup (well, I setup for this example).  It's not part of the user's data, it's from the developer's *remote-storage*. 
 
-If you're following along as the user that just logged into the [@test.rs.overhide.io](https://test.rs.overhide.io) *remote-storage*, then you should still be logged into this new page with our valid *remote-storage* connection:  it's the same domain hence the same token authorizes.  Since [@test.rs.overhide.io](https://test.rs.overhide.io) is a so called *Lucchetto* extended RS server &mdash; meaning it plays nice with this new in-app purchase button from the https://pay2my.app widgets &mdash; our click-through should be seamless.  We'll just need to top-up the $3 for the new IAP.
+If you're following along as the user that just logged into the [@test.rs.overhide.io](https://test.rs.overhide.io) *remote-storage*, then you should still be logged into this new page with your valid *remote-storage* connection:  it's the same domain hence the same token authorizes.  Since [@test.rs.overhide.io](https://test.rs.overhide.io) is a so called *Lucchetto* extended RS server &mdash; meaning it plays nice with this new in-app purchase button from the https://pay2my.app widgets &mdash; our click-through should be seamless.  We'll just need to top-up the $3 for the new IAP.
 
 Why are we paying again?
 
@@ -316,7 +316,7 @@ Keep in mind that the earlier $1.99 payment was to the [@test.rs.overhide.io](ht
 
 
 
-> If your user logged into this app with a regular RS server &mdash; not *Lucchetto* extended &mdash; the IAP will work nearly just as well.  The notable difference being extra prompts whenever the user revisits the app; as the IAP button cannot leverage non-extended RS authorization for payments:  regular RS servers return tokens without the extra metadata.
+> If your user logged into this app with a regular RS server &mdash; not *Lucchetto* extended &mdash; the IAP will work nearly just as well.  The notable difference being extra prompts whenever the user revisits the app; as the IAP button cannot leverage non-extended RS authorization for payments:  regular RS servers return tokens without the extra necessary metadata.
 
 
 
@@ -325,12 +325,12 @@ Regardless, clicking on the button will eventually lead to the following handler
 
 
 ```
-window.addEventListener('pay2myapp-appsell-sku-clicked', async (e) => { 
+window.addEventListener('pay2myapp-appsell-sku-clicked', async (event) => { 
   try {
-	const result = await lucchetto.getSku(`https://test.rs.overhide.io`, e.detail);
+	const result = await lucchetto.getSku(`https://test.rs.overhide.io`, event.detail);
 	alert(result);
-  } catch (e) {
-	console.error(`error :: no file for sku ${e.detail.sku}`);
+  } catch (event) {
+	console.error(`error :: no file for sku ${event.detail.sku}`);
   }      
 }, false);    
 ```
@@ -345,7 +345,15 @@ The `'pay2myapp-appsell-sku-clicked` event comes from the https://pay2my.app wid
 
 
 
-Reading the handler code we see that we use the event to retrieve a `result` via `lucchetto.getSku(..)` and `alert(result)` it out to the user.  The `lucchetto.getSku(..)` call provides the event's `detail` object and knows how to interpret it to retrieve the right content from the *Lucchetto* extended RS server provided as the first parameter, `'https://test.rs.overhide.io'` in our case.  We'll cover how to add this SKU content to the RS server later.
+Reading the handler code above, we use the `event` to retrieve a `result` via `lucchetto.getSku(..)` and `alert(result)` it out to the user.  The `alert(result)` is our app's value-add; you'll clearly do better things with he data.  The `lucchetto.getSku(..)` call takes the event's `detail` object and knows how to interpret it to retrieve the right content from the *Lucchetto* extended RS server provided as the first parameter, `'https://test.rs.overhide.io'` in our case.  
+
+
+
+> Keep in mind, the `lucchetto.getSku(..)` uses your &mdash; the app developers &mdash; *Lucchetto* RS connection to get paywall data, hence your RS server's connection string needs to be provided.  The `event.detail` object provides the chosen ledger's `from` (client) and `to` (your) addresses, and the user's `signature` for some `message`, essentially all that's needed for the *Lucchetto* RS server to validate authentication and payments on the ledger:  it's not sufficient to have this done in the browser, the RS server validates for itself.
+
+
+
+We'll cover how to add this SKU content to the RS server later.
 
 That `lucchetto` object used to `lucchetto.getSku(..)` is the piece of glue that connects *remote-storage* authorization to these IAP buttons in your application.  We really only use it in two places, this `lucchetto.getSku(..)` and earlier, to instantiate and initialize:
 
@@ -404,7 +412,7 @@ The `ethereumAddress` and `overhideAddress` are both Ethereum public addresses u
 
 
 
-> There are many more configurations of these buttons as described in the [pay2myapp-appsell](https://github.com/overhide/pay2my.app#pay2myapp-appsell-) documentation.
+> There are many more configurations of these buttons as described in the [pay2myapp-appsell](https://github.com/overhide/pay2my.app#pay2myapp-appsell-) documentation.  Even more cryptos such as Bitcoin, and growing.  But for *Lucchetto* RS we only focus on cryptos within the Ethereum address space.
 
 
 
@@ -412,7 +420,7 @@ Let's focus on these addresses a bit more.  This is a feature upsell button that
 
 
 
-Let me describe what I did to make this address of `0xd6106c445A07a6A1caF02FC8050F1FDe30d7cE8b` availalble to this Web component, and hopefully this will make sense for when you want to add your own.
+Let me describe what I did to make this address of `0xd6106c445A07a6A1caF02FC8050F1FDe30d7cE8b` available to this Web component, and hopefully this will make sense for when you want to add your own.
 
 
 
@@ -433,7 +441,7 @@ For US dollars it's a bit more involved as we need to connect this Ethereum addr
 
 We point our browser at [testnet onboarding](https://test.ledger.overhide.io/onboard) and start the onboarding.  I connected my [MetaMask](https://metamask.io/) wallet to the onboarding page so I can use its addresses.  
 
-During the Stripe.com account setup simply skip the form:  unfortunately when you're ready for production you cannot just skip this Stripe.com part of onboarding.
+Once clicked through to the Stripe.com account simply skip the form:  unfortunately when you're ready for production you cannot just skip this Stripe.com part of onboarding.
 
 ![](assets/stripe_test.png)
 
@@ -455,7 +463,7 @@ If you recall earlier, upon authorization, we retrieved data via `lucchetto.getS
 
 How do we set this up?
 
-Turns out the SKUs are simply *remote-storage* stored pieces of `plain/test` data served by *Lucchetto* extended RS servers, such as  [@test.rs.overhide.io](https://test.rs.overhide.io).  
+Turns out the SKUs are simply *remote-storage* stored pieces of `plain/text` data served by *Lucchetto* extended RS servers, such as  [@test.rs.overhide.io](https://test.rs.overhide.io).  
 
 To configure them we simply need to [use a RS app](https://overhide.github.io/armadietto/lucchetto/onboard.html#).
 
@@ -473,9 +481,9 @@ To configure them we simply need to [use a RS app](https://overhide.github.io/ar
 
 The [Lucchetto SKU onboard app](https://overhide.github.io/armadietto/lucchetto/onboard.html#) should be self explanatory.  You connect to a *Lucchetto* extended RS server such as one of the above listed.  The connected address must match the `ethereumAddress` and the `overhideAddress`.  If you made them different, you'll need to maintain separate RS connections to manage your SKUs.  For sanity, likely best to keep them the same.
 
-In my case, I'd connect to  [@test.rs.overhide.io](https://test.rs.overhide.io) with `0xd6106c445A07a6A1caF02FC8050F1FDe30d7cE8b` from my crypto wallet.
+In my case, I'd connect <a target="_blank" href="https://overhide.github.io/armadietto/lucchetto/onboard.html#">the app</a> to  [@test.rs.overhide.io](https://test.rs.overhide.io) with `0xd6106c445A07a6A1caF02FC8050F1FDe30d7cE8b` from my crypto wallet.
 
-Once connected the app lets you list existing SKUs, delete them, but most important, insert new ones using the "UPSERT" card.  Simply fill in the *price*, `3` in our case ($3), the *within*, `0` in our case (indefinite), and the *SKU*, `buy-nft` in our case to match the button.  Finally, set the *data*, which is the content returned from the `lucchetto.getSku(..)` call.  For our purposes, I set  it to `The cake is a lie!`.
+Once connected <a target="_blank" href="https://overhide.github.io/armadietto/lucchetto/onboard.html#">the app</a> lets you list existing SKUs, delete them, but most important, insert new ones using the "UPSERT" card.  Simply fill in the *price*, `3` in our case ($3), the *within*, `0` in our case (indefinite), and the *SKU*, `buy-nft` in our case, all matching our button.  Finally, set the *data*, which is the content returned from the `lucchetto.getSku(..)` call.  For our purposes, I set  it to `The cake is a lie!`.
 
 
 
@@ -493,4 +501,6 @@ Once you "UPSERT" you should see a confirmation, and you're done.  The SKU is re
 
 *Remote-storage* is a fantastic way to write your applications.
 
-Adding in-app purchases hopefully means you'll be able to get some kick-backs for the wonderful work you do!
+Adding in-app purchases hopefully means you'll be able to get some kick-backs for the wonderful work you do.
+
+Thanks for reading.
