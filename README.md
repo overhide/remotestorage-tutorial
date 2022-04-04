@@ -85,7 +85,7 @@ After visiting the <a target="_blank" href="https://overhide.github.io/remotesto
 
 
 
-![image-20220403190513909](C:\jj\src\remotestorage-tutorial\assets\image-20220403190513909.png)
+![image-20220403190513909](assets\image-20220403190513909.png)
 
 
 
@@ -179,7 +179,7 @@ What we're achieving is a one-way state flow through our `client`:
 
 
 
-![](C:\jj\src\remotestorage-tutorial\assets\one-way.png)
+![](assets\one-way.png)
 
 
 
@@ -201,7 +201,7 @@ Click on the *remote-storage* widget to start logging in:
 
 
 
-![image-20220403203124141](C:\jj\src\remotestorage-tutorial\assets\image-20220403203124141.png)
+![image-20220403203124141](assets\image-20220403203124141.png)
 
 
 
@@ -211,7 +211,7 @@ You're presented with a bunch of login options.  For now, scroll all the way to 
 
 
 
-![image-20220403203457592](C:\jj\src\remotestorage-tutorial\assets\image-20220403203457592.png)
+![image-20220403203457592](assets\image-20220403203457592.png)
 
 
 
@@ -221,7 +221,7 @@ You're prompted for a payment through Stripe.com.  This is a fake US dollars pay
 
 
 
-![image-20220403203627301](C:\jj\src\remotestorage-tutorial\assets\image-20220403203627301.png)
+![image-20220403203627301](assets\image-20220403203627301.png)
 
 
 
@@ -229,7 +229,7 @@ Enter fake information in the fields as per the instructions on screen:
 
 
 
-![](C:\jj\src\remotestorage-tutorial\assets\visa.png)
+![](assets\visa.png)
 
 
 
@@ -291,7 +291,7 @@ The main difference now is the grey in-app purchase button offered to your users
 
 
 
-![image-20220403205607892](C:\jj\src\remotestorage-tutorial\assets\image-20220403205607892.png)
+![image-20220403205607892](assets\image-20220403205607892.png)
 
 
 
@@ -478,7 +478,7 @@ Once connected <a target="_blank" href="https://overhide.github.io/armadietto/lu
 
 
 
-![image-20220403232748130](C:\jj\src\remotestorage-tutorial\assets\image-20220403232748130.png)
+![image-20220403232748130](assets\image-20220403232748130.png)
 
 
 
@@ -486,7 +486,7 @@ Once you "UPSERT" you should see a confirmation, and you're done.  The SKU is re
 
 
 
-![image-20220403232842915](C:\jj\src\remotestorage-tutorial\assets\image-20220403232842915.png)
+![image-20220403232842915](assets\image-20220403232842915.png)
 
 
 
