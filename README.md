@@ -24,7 +24,7 @@ If you're into devops, the RS ecosystem is an ecosystem of self-hosted clusters 
 
 All the code is Free Open-Source Software (FOSS).  The community is strongly pro-openness and empowering data self-ownership.
 
-The first part of the tutorial is a hands-on materialization of all of the above in a simplistic Web app.  In the second part we will extend our example to enable in-app purchases.  We will leverage RS &mdash; albeit with the <a target="_blank" href="https://www.npmjs.com/package/lucchetto">Lucchetto bolt-on</a> &mdash; to easily receive payments in dollars and cryptos for a an optional feature.
+The first part of the tutorial is a hands-on materialization of all of the above in a simplistic Web app.  In the second part we will extend our example to enable in-app purchases.  We will leverage RS &mdash; albeit with the <a target="_blank" href="https://www.npmjs.com/package/lucchetto">Lucchetto bolt-on</a> &mdash; to easily receive payments in dollars and cryptos for an optional feature.
 
 
 
@@ -65,7 +65,7 @@ Now the two HTML files we'll talk about are available to be opened with your bro
 
 ​	open http://localhost:8080/1-app.html
 
-​	open http://localhost:8080/2-app+iaps.html
+​	open http://localhost:8080/2-iaps.html
 
 
 
@@ -81,7 +81,7 @@ Let's take a look at our example study app:
 
 
 
-After visiting the <a target="_blank" href="https://overhide.github.io/remotestorage-tutorial/1-rs.html">RENDERED PRVIEW</a> we see a *remote storage widget* at the upper left corner, some informative text, and three buttons at the bottom to select a cake.  The white space in the middle is where our current cake selection will appear.  It's blank at the moment as we have never selected a cake yet:
+After visiting the <a target="_blank" href="https://overhide.github.io/remotestorage-tutorial/1-rs.html">RENDERED PRVIEW</a> we see a cake selecting application with a *remote storage widget* at the upper left corner, some informative text, and three cake selection buttons at the bottom.  The white space in the middle is where our current cake selection will appear.  It's blank at the moment as we have never selected a cake yet:
 
 
 
@@ -116,7 +116,7 @@ function setState(newState) {
 <p align = "center">1-rs.html :: lines 94-96</p><br/>
 The parameters simply state, some object `newState` matching the JSON schema `'appstate'` should be stored as a JSON object at the path `'/appstate'`.  The pathing and schemas should make sense shortly.
 
-Firstly, the `client` is our application's state store, initialized earlier in the code:
+Firstly, the `client`, is our application's state store, initialized earlier in the code:
 
 
 
@@ -137,9 +137,9 @@ const client = remoteStorage.scope('/remotestorage-tutorial/');
 
 In brief, we instantiate `RemoteStorage` with full caching, remote synching, and state change notifications.  
 
-The `remoteStorage.access.claim(..)` constrains that anytime a user connects their storage account to our application, the user must agree to read and write access (`'rw'`) for the `'remotestorage-tutorial'` namespace.  This doesn't concern us for now:  we haven't yet tried connecting to a remote server.
+The `remoteStorage.access.claim(..)` constrains that anytime a user connects their storage account to our application, the user must agree to read and write access (`'rw'`) for the `'remotestorage-tutorial'` namespace.  This doesn't concern us for now:  we haven't yet tried connecting to a remote server.  But it will concern us soon enough.
 
-The actual `client` is scoped to the `/remotestorage-tutorial/` path for its interactions.  Notice that the path repeats the claim's namespace.
+The actual `client` is scoped to the `/remotestorage-tutorial/` path for its interactions &mdash; this means that changes to files within this path will cause change notifications through this client..  Notice that the path repeats the claim's namespace.
 
 With these instantiations in place we're ready to use our applications unique namespace, 'remotestorage-tutorial', in both local and remote stores.
 
@@ -167,9 +167,9 @@ client.on('change', (event) => {
 ```
 
 <p align = "center">1-rs.html :: lines 82-87</p><br/>
-Here we're registering an event handler against the `client`.  This code will get called on every local in-browser or remote change to any object under our previously registered scope (path).
+Here we're registering an event handler against the `client`.  This code will get called on every local in-browser or remote change to any object under our previously registered scope (the `'/remotestorage-tutorial/'` root path).
 
-In our handler above we're only interested in changes to the `/appstate` path.
+In our handler above we're only interested in changes to the `/appstate` sub-path.
 
 On an update we simply set the value of our `#choice` `div` to the new cake choice.
 
@@ -185,7 +185,7 @@ What we're achieving is a one-way state flow through our `client`:
 
 
 
-What we're also transparently achieving is reliable storage of the app's state in user's storage:  both local and remote.  In fact, if you press F5 in your <a target="_blank" href="https://overhide.github.io/remotestorage-tutorial/1-rs.html">RENDERED PRVIEW</a>, the `client` will cause a `change` notification to our handler from the browser's local-storage.
+What we're also transparently achieving is reliable persistence of the app's state in our user's provided storage:  both local and remote.  In fact, if you press F5 in your <a target="_blank" href="https://overhide.github.io/remotestorage-tutorial/1-rs.html">RENDERED PRVIEW</a>, after the page refresh the first thing the `client` will do is cause a `change` notification to our handler with the last app's state it was continuously caching in the browser's local-storage.
 
 
 
