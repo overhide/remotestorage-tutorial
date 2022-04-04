@@ -69,17 +69,32 @@ Now the two HTML files we'll talk about are available to be opened with your bro
 
 
 
-## Study App
+## Our Application
 
 Let's take a look at our example study app:
 
 
 
-> **</>**  <a target="_blank" href="https://github.com/overhide/pay2my.app/blob/master/howto/intro/code/1_first.html">FULL CODE</a> 
+> **</>**  <a target="_blank" href="https://github.com/overhide/remotestorage-tutorial/blob/master/1-rs.html">FULL CODE</a> 
 >
-> **[!!]**   <a target="_blank" href="https://overhide.github.io/pay2my.app/howto/intro/code/1_first.html">RENDERED PRVIEW</a>
+> **[!!]**   <a target="_blank" href="https://overhide.github.io/remotestorage-tutorial/1-rs.html">RENDERED PRVIEW</a>
 
 
 
 With reference to the above code, let's go through the notable bits.
 
+
+
+## Our Application With In-App Purchases
+
+Now that we're comfortable leveraging *Remote Storage* to drive and cache our application's state, let's add in-app purchases:
+
+
+
+> **</>**  <a target="_blank" href="https://github.com/overhide/remotestorage-tutorial/blob/master/1-rs.html">FULL CODE</a> 
+>
+> **[!!]**   <a target="_blank" href="https://overhide.github.io/remotestorage-tutorial/1-rs.html">RENDERED PRVIEW</a>
+
+
+
+Again, with reference to the above code, let's go through the notable bits.
