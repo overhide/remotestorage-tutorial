@@ -326,7 +326,8 @@ window.addEventListener('pay2myapp-appsell-sku-clicked', async (event) => {
 }, false);    
 ```
 
-<p align = "center">2-iaps.html :: lines 140-147</p><br/>
+<p align = "center">2-iaps.html :: lines 144-151</p><br/>
+
 The `'pay2myapp-appsell-sku-clicked` event comes from the https://pay2my.app widgets, which are the same widgets providing authentication and authorization in our <a target="_blank" href="https://test.rs.overhide.io">@test.rs.overhide.io</a> server earlier.  
 
 
@@ -354,16 +355,27 @@ That `lucchetto` object used to `lucchetto.getSku(..)` is the piece of glue that
 
 
 ```
-const lucchetto = new Lucchetto(remoteStorage, true, document.getElementById('demo-hub'));
+const lucchetto = new Lucchetto({
+  remoteStorage: remoteStorage, 
+  overhideIsTest: true, 
+  overhideApiKey: '0x6cc3b096ef53d2e70152bed8f34448ddfaae34b3aa745b69a1d42f083a44080b',
+  pay2myAppHub: document.getElementById('demo-hub')});
 ```
 
-<p align = "center">2-iaps.html :: line 105</p><br/>
-When initializing `lucchetto` we provide the constructor with the *remote-storage* instance we normally use, `remoteStorage`.  The second parameter, the `true` boolean, indicates we're using testnets.  In a live production system you'd set this to `false`.  Finally, the last parameter is the `HTMLElement` reference of the <a target="_blank" href="https://github.com/overhide/pay2my.app#pay2myapp-hub-">pay2myapp-hub</a> Web component.  You do not need to concern yourself with the nitty gritty, but let's look at the three Web components now.
+<p align = "center">2-iaps.html :: line 105-109</p><br/>
+
+When initializing `lucchetto` we provide the constructor with an options object including the *remote-storage* instance we normally use, `remoteStorage`.   This let's `lucchetto` leverage the current *remote-storage* signed-in user details &mdash; to make in-app purchase flows as banal as possible.
+
+Next, we set the `overhideIsTest` option to `true` to indicate we're using testnets.  In a live production system you'd set this to `false`.  
+
+We're also providing an `overhideApiKey`.  An `overhideApiKey` is your, the developer's, key to access the ledgers through the *overhide* cluster.  It's not a big deal to get an API key and there aren't really any restrictions besides the normal rate limits (see https://pay2my.app).  The `overhideApiKey` is optional if the `remoteStorage` connection has your users always connecting from a *Lucchetto* extended RS server such as https://rs.overhide.io.  But, as not every user will have such a connection, users are likely to come from https://5apps.com and other providers.  It's prudent to provide a default here:  otherwise we can't talk to the *overhide* cluster to interact with ledgers.
+
+Lastly, the *pay2myAppHub* option is set to the `HTMLElement` reference of the <a target="_blank" href="https://github.com/overhide/pay2my.app#pay2myapp-hub-">pay2myapp-hub</a> Web component, the first Web component in the listing below (referenced by `id`).  The *lucchetto* instance we're creating influences all the in-app purchase Web components in this code listing.
 
 
 
 ```
-<pay2myapp-hub id="demo-hub" apiKey="0x6cc3b096ef53d2e70152bed8f34448ddfaae34b3aa745b69a1d42f083a44080b" isTest noCache></pay2myapp-hub>      
+<pay2myapp-hub id="demo-hub" isTest noCache></pay2myapp-hub>      
 
 <pay2myapp-login  
   hubId="demo-hub"
@@ -386,7 +398,7 @@ When initializing `lucchetto` we provide the constructor with the *remote-storag
 ```
 
 <p align = "center">2-iaps.html :: lines 55-74</p><br/>
-The first Web component is the before mentioned <a target="_blank" href="https://github.com/overhide/pay2my.app#pay2myapp-hub-">pay2myapp-hub</a>.  It's labelled with an ID `"demo-hub"` so it can be referenced from the other components (<a target="_blank" href="https://github.com/overhide/pay2my.app#setting-the-pay2myapp-hub-programatically">or programatically</a> in bigger apps with frameworks).  The hub is the main component that communicates with ledgers and services all the other components.  The `isTest`  attribute specifies that the hub will communicate with testnet ledgers.  Leave this attribute out for production deployments.  The `noCache` attribute asks the system not to cache credentials:  considering we use *remote-storage* to do that for us.  Finally, the hub is provided with an `apiKey`.  An `apiKey` is your, the developer's, key to access the ledgers.  It's not a big deal to get an API key and there aren't really any restrictions besides the normal rate limits (see https://pay2my.app).  
+The first Web component is the before mentioned <a target="_blank" href="https://github.com/overhide/pay2my.app#pay2myapp-hub-">pay2myapp-hub</a>.  It's labelled with an ID `"demo-hub"` so it can be referenced from the other components (<a target="_blank" href="https://github.com/overhide/pay2my.app#setting-the-pay2myapp-hub-programatically">or programatically</a> in bigger apps with frameworks).  The hub is the main component that communicates with ledgers and services all the other components.  The `isTest`  attribute specifies that the hub will communicate with testnet ledgers.  Leave this attribute out for production deployments.  The `noCache` attribute asks the system not to cache credentials:  considering we use *remote-storage* to do that for us.   
 
 
 

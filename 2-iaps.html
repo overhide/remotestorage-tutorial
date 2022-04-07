@@ -52,7 +52,7 @@
               Read more at: https://www.npmjs.com/package/pay2my.app
               ========================================================================= -->
 
-        <pay2myapp-hub id="demo-hub" apiKey="0x6cc3b096ef53d2e70152bed8f34448ddfaae34b3aa745b69a1d42f083a44080b" isTest noCache></pay2myapp-hub>      
+        <pay2myapp-hub id="demo-hub" isTest noCache></pay2myapp-hub>      
 
         <pay2myapp-login  
           hubId="demo-hub"
@@ -102,7 +102,11 @@
     remoteStorage.access.claim('remotestorage-tutorial', 'rw');     
     const widget = new Widget(remoteStorage, { leaveOpen:true });
     const client = remoteStorage.scope('/remotestorage-tutorial/');
-    const lucchetto = new Lucchetto(remoteStorage, true, document.getElementById('demo-hub'));
+    const lucchetto = new Lucchetto({
+      remoteStorage: remoteStorage, 
+      overhideIsTest: true, 
+      overhideApiKey: '0x6cc3b096ef53d2e70152bed8f34448ddfaae34b3aa745b69a1d42f083a44080b',
+      pay2myAppHub: document.getElementById('demo-hub')});
 
     // Initialize
     document.addEventListener('DOMContentLoaded', function() {
