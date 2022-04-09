@@ -82,7 +82,7 @@
     // Application state JSON schema
     //
     // Documentation: https://remotestoragejs.readthedocs.io/en/latest/js-api/base-client.html#declareType
-    const appstate_schema = {
+    const AppState = {
       type: 'object',
       properties: {
         cakce_choice: {
@@ -98,9 +98,7 @@
     }
 
     // Construct and dependency inject
-    const remoteStorage = new RemoteStorage({changeEvents: { local: true, window: true }});
-    remoteStorage.access.claim('remotestorage-tutorial', 'rw');     
-    const widget = new Widget(remoteStorage, { leaveOpen:true });
+    const remoteStorage = new RemoteStorage({changeEvents: { local: true, window: true, remote: true, conflicts: true }});
     const client = remoteStorage.scope('/remotestorage-tutorial/');
     const lucchetto = new Lucchetto({
       remoteStorage: remoteStorage, 
@@ -110,18 +108,21 @@
 
     // Initialize
     document.addEventListener('DOMContentLoaded', function() {
+      remoteStorage.access.claim('remotestorage-tutorial', 'rw');     
+      var widget = new Widget(remoteStorage, { leaveOpen:true });
       widget.attach('remotestorage-widget-anchor');
+      client.cache('');
 
       // Register our application state JSON schema
       //
       // Documentation: https://remotestoragejs.readthedocs.io/en/latest/js-api/base-client.html#declareType
-      client.declareType('appstate', appstate_schema);
+      client.declareType('AppState', AppState);
 
       // React to application state changes from RS
       //
       // Documentation: https://remotestoragejs.readthedocs.io/en/latest/js-api/base-client.html#change-events
       client.on('change', (event) => {
-        if (event.relativePath === '/appstate') {
+        if (event.relativePath === 'appstate') {
           appstate = event.newValue;
           document.getElementById('choice').innerHTML = appstate.cake_choice;
         }
@@ -133,7 +134,7 @@
     //
     // Documentation: https://remotestoragejs.readthedocs.io/en/latest/js-api/base-client.html#storeObject
     function setState(newState) {
-      client.storeObject('appstate', '/appstate', newState);
+      client.storeObject('AppState', 'appstate', newState);
     }    
 
     // This is where we listen to IAP clicks, to fetch SKU files from your, the dev's armadietto+lucchetto.

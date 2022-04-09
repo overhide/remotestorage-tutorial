@@ -109,25 +109,33 @@ The `setState` global function simply sets cake names to the `client`:
 
 ```
 function setState(newState) {
-  client.storeObject('appstate', '/appstate', newState);
+  client.storeObject('AppState', 'appstate', newState);
 }    
 ```
 
-<p align = "center">1-rs.html :: lines 94-96</p><br/>
-The parameters simply state, some object `newState` matching the JSON schema `'appstate'` should be stored as a JSON object at the path `'/appstate'`.  The pathing and schemas should make sense shortly.
+<p align = "center">1-rs.html :: lines 95-97</p><br/>
+
+The parameters simply state, some object `newState` matching the JSON schema `'AppState'` should be stored as a JSON object at relative path `'appstate'`.  The pathing and schemas should make sense shortly.
 
 Firstly, the `client`, is our application's state store, initialized earlier in the code:
 
 
 
 ```
-const remoteStorage = new RemoteStorage({changeEvents: { local: true, window: true }});
-remoteStorage.access.claim('remotestorage-tutorial', 'rw');     
-...
+// Construct and dependency inject
+const remoteStorage = new RemoteStorage({changeEvents: { local: true, window: true, remote: true, conflicts: true }});
 const client = remoteStorage.scope('/remotestorage-tutorial/');
+
+// Initialize
+document.addEventListener('DOMContentLoaded', function() {
+  remoteStorage.access.claim('remotestorage-tutorial', 'rw');     
+  var widget = new Widget(remoteStorage, { leaveOpen:true });
+  widget.attach('remotestorage-widget-anchor');
+  client.cache('');
 ```
 
-<p align = "center">1-rs.html :: lines 65-68</p><br/>
+<p align = "center">1-rs.html :: lines 64-73</p><br/>
+
 >  For the full documentation on `RemoteStorage` construction and `client` instantiation read the docs:
 >
 > - https://remotestoragejs.readthedocs.io/en/latest/js-api/remotestorage.html
@@ -135,11 +143,15 @@ const client = remoteStorage.scope('/remotestorage-tutorial/');
 
 
 
-In brief, we instantiate `RemoteStorage` with full caching, remote synching, and state change notifications.  
+In brief, we instantiate `RemoteStorage` with full caching, remote synching, and state change notifications.  This is the main object that let's us talk to the *remote-storage* ecosystem.
+
+We also instantiate the `widget` once our DOM loads &mdash; the visual component that the user interacts with for logins.  We instantiate it with `leaveOpen:true` so that it doesn't collapse and stays open at full width, at all times.  We also attach it to the `remotestorage-widget-anchor` `div` earlier in our page:  that's simply where it sits in the DOM.
 
 The `remoteStorage.access.claim(..)` constrains that anytime a user connects their storage account to our application, the user must agree to read and write access (`'rw'`) for the `'remotestorage-tutorial'` namespace.  This doesn't concern us for now:  we haven't yet tried connecting to a remote server.  But it will concern us soon enough.
 
 The actual `client` is scoped to the `/remotestorage-tutorial/` path for its interactions &mdash; this means that changes to files within this path will cause change notifications through this client..  Notice that the path repeats the claim's namespace.
+
+Lastly, we kickoff the change notification off of our cache with `client.cache('')`.  The empty parameter string dictates we're interested in all sub-paths for change notifications &mdash; although in this app we only have one sub-path; `'appstate'`.
 
 With these instantiations in place we're ready to use our applications unique namespace, 'remotestorage-tutorial', in both local and remote stores.
 
@@ -151,7 +163,7 @@ With these instantiations in place we're ready to use our applications unique na
 
 
 
-Let's move on to the importance of the `{ local: true, window: true}` options passed into the `RemoteStorage` constructor.  With these we're asking that, as the resultant `client` tracks our application state, it update our rendering widgets with a one-way state flow.
+Let's move on to the importance of the `{ local: true, window: true, remote: true, conflicts: true }` options passed into the `RemoteStorage` constructor and the `client.cache('')` invocation.  With these we're asking that, as the resultant `client` tracks our application state, it update our rendering widgets with a one-way state flow.
 
 We've already seen the `client` receiving new state via the `client.storeObject(..)`.  Fully decoupled from these writes we have the state change listener:
 
@@ -159,14 +171,15 @@ We've already seen the `client` receiving new state via the `client.storeObject(
 
 ```
 client.on('change', (event) => {
-  if (event.relativePath === '/appstate') {
+  if (event.relativePath === 'appstate') {
     appstate = event.newValue;
 	document.getElementById('choice').innerHTML = appstate.cake_choice;
   }
 });   
 ```
 
-<p align = "center">1-rs.html :: lines 82-87</p><br/>
+<p align = "center">1-rs.html :: lines 83-88</p><br/>
+
 Here we're registering an event handler against the `client`.  This code will get called on every local in-browser or remote change to any object under our previously registered scope (the `'/remotestorage-tutorial/'` root path).
 
 In our handler above we're only interested in changes to the `/appstate` sub-path.
@@ -235,7 +248,7 @@ Enter fake information in the fields as per the instructions on screen:
 
 Now you're back in our cake example app and you're connected with your newly acquired *remote-storage*.
 
-You can use the exact same storage in <a target="_blank" href="https://remotestorage.io/apps/">any other RS application</a>.  Hope you saved off your secret token!  Your browser should remember, but other browsers won't.
+You can use the exact same storage in <a target="_blank" href="https://remotestorage.io/apps/">any other RS application</a>.  Hope you saved off your secret token!  Your browser should remember, as long as you stick to it.
 
 To make your life easier, your best bet is to likely use social login providers on that login screen, or an Ethereum wallet if you can connect it.  Play around with the various options.
 
@@ -250,14 +263,14 @@ Before we conclude this section, let's get back to our `appstate` object as it's
 
 
 ```
-client.storeObject('appstate', '/appstate', newState);
+client.storeObject('AppState', 'appstate', newState);
 ```
 
 <p align = "center">1-rs.html :: line 95</p><br/>
-We mentioned that the first parameter `'appstate'` indicates the JSON schema expected of the third parameter.  This JSON schema is registered against the `client`:
+We mentioned that the first parameter `'AppState'` indicates the JSON schema expected of the third parameter.  This JSON schema is registered against the `client`:
 
 ``` 
-const appstate_schema = {
+const AppState = {
   type: 'object',
   properties: {
 	cakce_choice: {
@@ -267,11 +280,11 @@ const appstate_schema = {
   required: ['cake_choice']
 };
 ...
-client.declareType('appstate', appstate_schema);
+client.declareType('AppState', AppState);
 ```
 
 <p align = "center">1-rs.html :: lines 49-57 and 77</p><br/>
-The `'appstate'` schema with the value from `newState` is saved under the path `/appstate`, which is a path relative to the scope path of our `client`.  Hence we can think of the object being at `/remotestorage-tutorial/appstate`.
+The `'AppState'` schema with the value from `newState` is saved under the path `appstate`, which is a path relative to the scope path of our `client`.  Hence we can think of the object being at `/remotestorage-tutorial/appstate`.
 
 
 
@@ -326,7 +339,7 @@ window.addEventListener('pay2myapp-appsell-sku-clicked', async (event) => {
 }, false);    
 ```
 
-<p align = "center">2-iaps.html :: lines 144-151</p><br/>
+<p align = "center">2-iaps.html :: lines 145-152</p><br/>
 
 The `'pay2myapp-appsell-sku-clicked` event comes from the https://pay2my.app widgets, which are the same widgets providing authentication and authorization in our <a target="_blank" href="https://test.rs.overhide.io">@test.rs.overhide.io</a> server earlier.  
 
@@ -362,8 +375,7 @@ const lucchetto = new Lucchetto({
   pay2myAppHub: document.getElementById('demo-hub')});
 ```
 
-<p align = "center">2-iaps.html :: line 105-109</p><br/>
-
+<p align = "center">2-iaps.html :: line 103-107</p><br/>
 When initializing `lucchetto` we provide the constructor with an options object including the *remote-storage* instance we normally use, `remoteStorage`.   This let's `lucchetto` leverage the current *remote-storage* signed-in user details &mdash; to make in-app purchase flows as banal as possible.
 
 Next, we set the `overhideIsTest` option to `true` to indicate we're using testnets.  In a live production system you'd set this to `false`.  
