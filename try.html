@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="assets/demo.css">
+    <script src="https://cdn.jsdelivr.net/npm/remotestoragejs@latest/release/remotestorage.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/remotestorage-widget@latest/build/widget.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lucchetto@latest/dist/lucchetto.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/pay2my.app@latest/dist/pay2my.app.js"></script>
+  </head>
+
+  <body class="w3-content">
+
+    <img class="visa" id="visa" src="assets/visa.png">
+
+    <!--- RS widget anchor div -->
+    <div id="remotestorage-widget-anchor"></div>
+
+    <div class="w3-container w3-padding-32"><div class="w3-card w3-sand w3-margin note">
+      <img class="w3-left info" src="assets/info.png">
+      <p>Click the cake buttons to set your current favourite.  When ready, purchase the NFT for the cake.</p>        
+    </div></div>
+
+    <!--- the cake choice display hooked to app state changes -->
+    <div class="w3-row w3-padding-32 centered">
+      <div id="choice" class="w3-col s4 w3-center">
+        &nbsp;
+      </div>
+    </div>
+
+    <!--- the three app state changing buttons -->
+    <div class="w3-row w3-padding-32 ">
+      <div class="w3-col s4 w3-center">
+        <button class="w3-button w3-black" onClick="setState({...appstate, cake_choice: 'Black Forest'})">Set "Black Forest"</button>
+      </div>
+      <div class="w3-col s4 w3-center">
+        <button class="w3-button w3-red" onClick="setState({...appstate, cake_choice: 'Carrot'})">Set "Carrot"</button>
+      </div>
+      <div class="w3-col s4 w3-center">
+        <button class="w3-button w3-khaki" onClick="setState({...appstate, cake_choice: 'Tiramisu'})">Set "Tiramisu"</button>
+      </div>
+    </div>
+
+    <div class="w3-row w3-padding-32 centered">
+      <div class="w3-col s4 w3-center">
+
+        <!--- =========================================================================
+              pay2my.app (IAP widgets)
+
+              Read more at: https://www.npmjs.com/package/pay2my.app
+              ========================================================================= -->
+
+        <pay2myapp-hub id="demo-hub" isTest noCache></pay2myapp-hub>      
+
+        <pay2myapp-login  
+          hubId="demo-hub"
+          overhideSocialMicrosoftEnabled
+          overhideSocialGoogleEnabled
+          overhideWeb3Enabled
+          ethereumWeb3Enabled
+          overhideSecretTokenEnabled>
+        </pay2myapp-login>
+      
+        <pay2myapp-appsell 
+          hubId="demo-hub" 
+          sku="buy-nft"
+          priceDollars="3"
+          authorizedMessage="Cake NFT"
+          unauthorizedTemplate="Buy Cake NFT ($${topup})"
+          ethereumAddress="0xd6106c445A07a6A1caF02FC8050F1FDe30d7cE8b"
+          overhideAddress="0xd6106c445A07a6A1caF02FC8050F1FDe30d7cE8b">
+        </pay2myapp-appsell>
+
+      </div>
+    </div>
+  </body>
+
+  <script>
+
+    // Application state JSON schema
+    //
+    // Documentation: https://remotestoragejs.readthedocs.io/en/latest/js-api/base-client.html#declareType
+    const AppState = {
+      type: 'object',
+      properties: {
+        cakce_choice: {
+          type: 'string'
+        }
+      },
+      required: ['cake_choice']
+    };
+
+    // Our appstate object
+    var appstate = {
+      cake_choice: null
+    }
+
+    // Construct and dependency inject
+    var client;
+    var lucchetto;
+
+    // Initialize
+    document.addEventListener('DOMContentLoaded', function() {
+      const remoteStorage = new RemoteStorage({changeEvents: { local: true, window: true, remote: true, conflicts: true }});
+      remoteStorage.access.claim('remotestorage-tutorial', 'rw');     
+      lucchetto = new Lucchetto({
+        remoteStorage: remoteStorage, 
+        overhideIsTest: true, 
+        overhideApiKey: '0x6cc3b096ef53d2e70152bed8f34448ddfaae34b3aa745b69a1d42f083a44080b',
+        pay2myAppHub: document.getElementById('demo-hub')});
+      client = remoteStorage.scope('/remotestorage-tutorial/');
+      var widget = new Widget(remoteStorage, { leaveOpen:true });
+      widget.attach('remotestorage-widget-anchor');
+      client.cache('');
+
+      // Register our application state JSON schema
+      //
+      // Documentation: https://remotestoragejs.readthedocs.io/en/latest/js-api/base-client.html#declareType
+      client.declareType('AppState', AppState);
+
+      // React to application state changes from RS
+      //
+      // Documentation: https://remotestoragejs.readthedocs.io/en/latest/js-api/base-client.html#change-events
+      client.on('change', (event) => {
+        if (event.relativePath === 'appstate') {
+          appstate = event.newValue;
+          document.getElementById('choice').innerHTML = appstate.cake_choice;
+        }
+      });      
+
+    });
+
+    // Change the application state within RS
+    //
+    // Documentation: https://remotestoragejs.readthedocs.io/en/latest/js-api/base-client.html#storeObject
+    function setState(newState) {
+      client.storeObject('AppState', 'appstate', newState);
+    }    
+
+    // This is where we listen to IAP clicks, to fetch SKU files from your, the dev's armadietto+lucchetto.
+    //
+    // The 'pay2myapp-appsell-sku-clicked' event is documented:  https://github.com/overhide/pay2my.app#pay2myapp-appsell-
+    //
+    // In response to the 'pay2myapp-appsell-sku-clicked' we fetch the SKU data and alert on it.
+    window.addEventListener('pay2myapp-appsell-sku-clicked', async (e) => { 
+      try {
+        const result = await lucchetto.getSku(`https://test.rs.overhide.io`, e.detail);
+        alert(result);
+      } catch (e) {
+        console.error(`error :: no file for sku ${e.detail.sku}`);
+      }      
+    }, false);    
+
+    // This event fires whenever we're asked to topup funds.
+    // We're using it here to show the VISA instructional helper image.
+    window.addEventListener('pay2myapp-hub-pending-transaction',(event) => { 
+      console.log(`pending-transaction :: ${JSON.stringify(event.detail, null, 2)}`);
+      if (event.detail.currency == 'dollars') {
+        document.querySelector("#visa").style.opacity = event.detail.isPending ? "1" : "0";
+      }
+    }, false);
+
+  </script>
+
+</html>
