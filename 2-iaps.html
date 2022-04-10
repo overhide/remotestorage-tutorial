@@ -98,7 +98,7 @@
     }
 
     // Construct and dependency inject
-    const remoteStorage = new RemoteStorage({changeEvents: { local: true, window: true, remote: true, conflicts: true }});
+    const remoteStorage = new RemoteStorage({logging: true, changeEvents: { local: true, window: true, remote: true, conflicts: true }});
     const client = remoteStorage.scope('/remotestorage-tutorial/');
     const lucchetto = new Lucchetto({
       remoteStorage: remoteStorage, 
@@ -109,7 +109,7 @@
     // Initialize
     document.addEventListener('DOMContentLoaded', function() {
       remoteStorage.access.claim('remotestorage-tutorial', 'rw');     
-      var widget = new Widget(remoteStorage, { leaveOpen:true });
+      var widget = new Widget(remoteStorage, { logging: true, leaveOpen:true });
       widget.attach('remotestorage-widget-anchor');
       client.cache('');
 
