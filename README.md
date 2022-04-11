@@ -298,7 +298,7 @@ Now that we're comfortable leveraging *Remote Storage* to drive and cache our ap
 
 
 
-The main difference now is the grey in-app purchase button offered to your users at the bottom of our app, as per the new <a target="_blank" href="https://overhide.github.io/remotestorage-tutorial/2-iaps.html">RENDERED PRVIEW</a>:
+The main difference here is the grey in-app purchase button offered to your users at the bottom of our app, as per the new <a target="_blank" href="https://overhide.github.io/remotestorage-tutorial/2-iaps.html">RENDERED PRVIEW</a>:
 
 
 
