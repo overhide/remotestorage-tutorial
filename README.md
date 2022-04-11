@@ -338,6 +338,7 @@ window.addEventListener('pay2myapp-appsell-sku-clicked', async (event) => {
 ```
 
 <p align = "center">2-iaps.html :: lines 145-152</p><br/>
+
 The `pay2myapp-appsell-sku-clicked` event comes from the https://pay2my.app widgets, which are the same widgets providing authentication and authorization in our <a target="_blank" href="https://test.rs.overhide.io">@test.rs.overhide.io</a> server earlier.  
 
 
