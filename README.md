@@ -504,7 +504,7 @@ The <a target="_blank" href="https://overhide.github.io/armadietto/lucchetto/onb
 
 In my case, I'd connect <a target="_blank" href="https://overhide.github.io/armadietto/lucchetto/onboard.html#">the app</a> to  <a target="_blank" href="https://test.rs.overhide.io">@test.rs.overhide.io</a> with `0xd6106c445A07a6A1caF02FC8050F1FDe30d7cE8b` from my crypto wallet.
 
-Once connected <a target="_blank" href="https://overhide.github.io/armadietto/lucchetto/onboard.html#">the app</a> lets you list existing SKUs, delete them, but most important, insert new ones using the "UPSERT" card.  Simply fill in the *price*, `3` in our case ($3), the *within*, `0` in our case (indefinite), and the *SKU*, `buy-nft` in our case, all matching our button.  Finally, set the *data*, which is the content returned from the `lucchetto.getSku(..)` call.  For our purposes, I set  it to `The cake is a lie!`.
+Once connected, <a target="_blank" href="https://overhide.github.io/armadietto/lucchetto/onboard.html#">the app</a> lets you list existing SKUs, delete them, but most important, insert new ones using the "UPSERT" card.  Simply fill in the *price*, `3` in our case ($3), the *within*, `0` in our case (indefinite), and the *SKU*, `buy-nft` in our case, all matching our button.  Finally, set the *data*, which is the content returned from the `lucchetto.getSku(..)` call.  For our purposes, I set  it to `The cake is a lie!`.
 
 
 
