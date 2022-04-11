@@ -246,7 +246,7 @@ Enter fake information in the fields as per the instructions on screen:
 
 Now you're back in our cake example app and you're connected with your newly acquired *remote-storage*.
 
-You can use the exact same storage in <a target="_blank" href="https://remotestorage.io/apps/">any other RS application</a>.  Hope you saved off your secret token!  Although your browser should remember, as long as you stick to it.
+You can use the exact same storage in <a target="_blank" href="https://remotestorage.io/apps/">any other RS application</a>.  Hope you saved off your secret token!  Although your in-browser password manager should remember, as long as you stick to it.
 
 To make your life easier, your best bet is to likely use social login providers on that login screen, or an Ethereum wallet if you can connect it.  Play around with the various options.
 
