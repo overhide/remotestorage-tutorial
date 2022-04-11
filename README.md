@@ -12,13 +12,11 @@ We start by learning how to leverage <a target="_blank" href="https://remotestor
 
 With the help of the <a target="_blank" href="https://www.npmjs.com/package/remotestoragejs">remoteStorage.js</a> NPM library RS becomes an offline-first back-end for your Web application.  Offline-first as your users' data is synced with the back-end when they're online but leverages browsers' local-storage when they're disconnected.  All without any effort from you, the app developer.
 
+The RS ecosystem is a Bring-Your-Own-Data (BYOD) <a target="_blank" href="https://unhosted.org/">un-hosted</a> concept:  your users authenticate and authorize with any of the RS hosts in the ecosystem, or their own, and connect to your application with their data, that they bring from the RS provider of their choosing.  You, the app developer, don't own and are not responsible for their data.  They, your users, have freedom of where their data lives and how safe it is.  For all intents and purposes the RS provider can be a public offering such as <a target="_blank" href="https://rs.overhide.io">overhide.io</a> or <a target="_blank" href="https://remotestorage.io/servers/">other RS servers</a>, or the user's self-hosted system.
 
 
 ![](./assets/intro.png)
 
-
-
-The RS ecosystem is a Bring-Your-Own-Data (BYOD) <a target="_blank" href="https://unhosted.org/">un-hosted</a> concept:  your users authenticate and authorize with any of the RS hosts in the ecosystem, or their own, and connect to your application with their data, that they bring from the RS provider of their choosing.  You, the app developer, don't own and are not responsible for their data.  They, your users, have freedom of where their data lives and how safe it is.  For all intents and purposes the RS provider can be a public offering such as <a target="_blank" href="https://rs.overhide.io">overhide.io</a> or <a target="_blank" href="https://remotestorage.io/servers/">other RS servers</a>, or the user's self-hosted system.
 
 If you're into devops, the RS ecosystem is an ecosystem of self-hosted clusters that are stood up by the community for everyone to use.  You can stand up a private cluster just for your app or for the public.  You can provide RS storage for free or charge a fee in dollars or ethers.  To stand up a paid server look no further than the <a target="_blank" href="https://github.com/overhide/armadietto/blob/master/lucchetto/README.md">Lucchetto RS server</a>, batteries included.
 
