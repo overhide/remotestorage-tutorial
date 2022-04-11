@@ -347,7 +347,7 @@ The `pay2myapp-appsell-sku-clicked` event comes from the https://pay2my.app widg
 
 
 
-Reading the handler code above, we use the `event` to retrieve a `result` via `lucchetto.getSku(..)` and `alert(result)` it out to the user.  The `alert(result)` is our app's value-add; you'll clearly do better things with he data.  The `lucchetto.getSku(..)` call takes the event's `detail` object and knows how to interpret it to retrieve the right content from the *Lucchetto* extended RS server provided as the first parameter, `'https://test.rs.overhide.io'` in our case.  
+Reading the handler code above; we use the `event` to retrieve a `result` via `lucchetto.getSku(..)` and `alert(result)` it out to the user.  The `alert(result)` is our app's value-add; you'll clearly do better things with the data.  The `lucchetto.getSku(..)` call takes the event's `detail` object and knows how to interpret it to retrieve the right content from the *Lucchetto* extended RS server provided as the first parameter, `'https://test.rs.overhide.io'` in our case.  
 
 
 
