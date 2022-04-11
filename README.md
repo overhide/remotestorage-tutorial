@@ -375,7 +375,7 @@ const lucchetto = new Lucchetto({
 
 <p align = "center">2-iaps.html :: line 104-108</p><br/>
 
-When initializing `lucchetto` we provide the constructor with an options object including the *remote-storage* instance we normally use, `remoteStorage`.   This let's `lucchetto` leverage the current *remote-storage* signed-in user details &mdash; to make in-app purchase flows as banal as possible.
+When initializing `lucchetto` we provide the constructor with an options object including the *remote-storage* instance we're already using, `remoteStorage`.   This let's `lucchetto` leverage the current *remote-storage* signed-in user details &mdash; to make in-app purchase flows as banal as possible.
 
 Next, we set the `overhideIsTest` option to `true` to indicate we're using testnets.  In a live production system you'd set this to `false`.  
 
