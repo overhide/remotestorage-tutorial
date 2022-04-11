@@ -114,7 +114,6 @@ function setState(newState) {
 ```
 
 <p align = "center">1-rs.html :: lines 95-97</p><br/>
-
 The parameters simply state, some object `newState` matching the JSON schema `'AppState'` should be stored as a JSON object at relative path `'appstate'`.  The pathing and schemas should make sense shortly.
 
 Firstly, the `client`, is our application's state store, initialized earlier in the code:
@@ -124,18 +123,17 @@ Firstly, the `client`, is our application's state store, initialized earlier in 
 ```
 // Construct and dependency inject
 const remoteStorage = new RemoteStorage({changeEvents: { local: true, window: true, remote: true, conflicts: true }});
+remoteStorage.access.claim('remotestorage-tutorial', 'rw');     
 const client = remoteStorage.scope('/remotestorage-tutorial/');
 
 // Initialize
 document.addEventListener('DOMContentLoaded', function() {
-  remoteStorage.access.claim('remotestorage-tutorial', 'rw');     
   var widget = new Widget(remoteStorage, { leaveOpen:true });
   widget.attach('remotestorage-widget-anchor');
   client.cache('');
 ```
 
 <p align = "center">1-rs.html :: lines 64-73</p><br/>
-
 >  For the full documentation on `RemoteStorage` construction and `client` instantiation read the docs:
 >
 > - https://remotestoragejs.readthedocs.io/en/latest/js-api/remotestorage.html
@@ -179,7 +177,6 @@ client.on('change', (event) => {
 ```
 
 <p align = "center">1-rs.html :: lines 83-88</p><br/>
-
 Here we're registering an event handler against the `client`.  This code will get called on every local in-browser or remote change to any object under our previously registered scope (the `'/remotestorage-tutorial/'` root path).
 
 In our handler above we're only interested in changes to the `/appstate` sub-path.
@@ -340,7 +337,6 @@ window.addEventListener('pay2myapp-appsell-sku-clicked', async (event) => {
 ```
 
 <p align = "center">2-iaps.html :: lines 145-152</p><br/>
-
 The `'pay2myapp-appsell-sku-clicked` event comes from the https://pay2my.app widgets, which are the same widgets providing authentication and authorization in our <a target="_blank" href="https://test.rs.overhide.io">@test.rs.overhide.io</a> server earlier.  
 
 
@@ -375,7 +371,8 @@ const lucchetto = new Lucchetto({
   pay2myAppHub: document.getElementById('demo-hub')});
 ```
 
-<p align = "center">2-iaps.html :: line 103-107</p><br/>
+<p align = "center">2-iaps.html :: line 104-108</p><br/>
+
 When initializing `lucchetto` we provide the constructor with an options object including the *remote-storage* instance we normally use, `remoteStorage`.   This let's `lucchetto` leverage the current *remote-storage* signed-in user details &mdash; to make in-app purchase flows as banal as possible.
 
 Next, we set the `overhideIsTest` option to `true` to indicate we're using testnets.  In a live production system you'd set this to `false`.  
