@@ -103,6 +103,7 @@ With reference to the <a target="_blank" href="https://github.com/overhide/remot
 <button ... onClick="setState({...appstate, cake_choice: 'Tiramisu'})">Set "Tiramisu"</button>
 ```
 <p align = "center">1-rs.html :: lines 32-38</p><br/>
+
 The `setState` global function simply sets cake names to the `client`:
 
 
@@ -114,6 +115,7 @@ function setState(newState) {
 ```
 
 <p align = "center">1-rs.html :: lines 95-97</p><br/>
+
 The parameters simply state, some object `newState` matching the JSON schema `'AppState'` should be stored as a JSON object at relative path `'appstate'`.  The pathing and schemas should make sense shortly.
 
 Firstly, the `client`, is our application's state store, initialized earlier in the code:
@@ -178,6 +180,7 @@ client.on('change', (event) => {
 ```
 
 <p align = "center">1-rs.html :: lines 83-88</p><br/>
+
 Here we're registering an event handler against the `client`.  This code will get called on every local in-browser or remote change to any object under our previously registered scope (the `'/remotestorage-tutorial/'` root path).
 
 In our handler above we're only interested in changes to the `/appstate` sub-path.
@@ -265,6 +268,7 @@ client.storeObject('AppState', 'appstate', newState);
 ```
 
 <p align = "center">1-rs.html :: line 95</p><br/>
+
 We mentioned that the first parameter `'AppState'` indicates the JSON schema expected of the third parameter.  This JSON schema is registered against the `client`:
 
 ``` 
@@ -282,6 +286,7 @@ client.declareType('AppState', AppState);
 ```
 
 <p align = "center">1-rs.html :: lines 49-57 and 77</p><br/>
+
 The `'AppState'` schema with the value from `newState` is saved under the path `appstate`, which is a path relative to the scope path of our `client`.  Hence we can think of the object being at `/remotestorage-tutorial/appstate`.
 
 
@@ -409,6 +414,7 @@ Lastly, the *pay2myAppHub* option is set to the `HTMLElement` reference of the <
 ```
 
 <p align = "center">2-iaps.html :: lines 55-74</p><br/>
+
 The first Web component is the before mentioned <a target="_blank" href="https://github.com/overhide/pay2my.app#pay2myapp-hub-">pay2myapp-hub</a>.  It's labelled with an ID `"demo-hub"` so it can be referenced from the other components (<a target="_blank" href="https://github.com/overhide/pay2my.app#setting-the-pay2myapp-hub-programatically">or programatically</a> in bigger apps with frameworks).  The hub is the main component that communicates with ledgers and services on behalf of all the other components.  The `isTest`  attribute specifies that the hub will communicate with testnet ledgers.  Leave this attribute out for production deployments.  The `noCache` attribute asks the system not to cache credentials:  considering we use *remote-storage* to do that for us.   
 
 
@@ -445,6 +451,7 @@ Let me describe what I did to make this address of `0xd6106c445A07a6A1caF02FC805
 ```
 
 <p align = "center">2-iaps.html :: lines 72-73</p><br/>
+
 The process is the same for mainnet/prod/live as for testnet/fake, except with different networks.  
 
 First and foremost I setup the <a target="_blank" href="https://metamask.io/">MetaMask</a> wallet in my browser and one of my Ethereum addresses is `0xd6106c445A07a6A1caF02FC8050F1FDe30d7cE8b`.  
