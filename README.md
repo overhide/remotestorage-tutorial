@@ -386,6 +386,14 @@ Next, we set the `overhideIsTest` option to `true` to indicate we're using testn
 
 We're also providing an `overhideApiKey`.  An `overhideApiKey` is your, the developer's, key to access the ledgers through the *overhide* cluster.  It's not a big deal to get an API key and there aren't really any restrictions besides the normal rate limits (see https://pay2my.app).  The `overhideApiKey` is optional if the `remoteStorage` connection has your users always connecting from a *Lucchetto* extended RS server such as https://rs.overhide.io.  But, as not every user will have such a connection, users are likely to come from https://5apps.com and other providers.  It's prudent to provide a default here:  otherwise we can't talk to the *overhide* cluster to interact with ledgers.
 
+
+
+> To get your own `apiKey` for your application visit https://token.overhide.io/register.
+>
+> Ensure to get the right key for your testnet app and a production key for your live app deployment.
+
+
+
 Lastly, the *pay2myAppHub* option is set to the `HTMLElement` reference of the <a target="_blank" href="https://github.com/overhide/pay2my.app#pay2myapp-hub-">pay2myapp-hub</a> Web component, the first Web component in the listing below (referenced by `id`).  The *lucchetto* instance we're creating influences all the in-app purchase Web components in this code listing.
 
 
@@ -416,12 +424,6 @@ Lastly, the *pay2myAppHub* option is set to the `HTMLElement` reference of the <
 <p align = "center">2-iaps.html :: lines 55-74</p><br/>
 
 The first Web component is the before mentioned <a target="_blank" href="https://github.com/overhide/pay2my.app#pay2myapp-hub-">pay2myapp-hub</a>.  It's labelled with an ID `"demo-hub"` so it can be referenced from the other components (<a target="_blank" href="https://github.com/overhide/pay2my.app#setting-the-pay2myapp-hub-programatically">or programatically</a> in bigger apps with frameworks).  The hub is the main component that communicates with ledgers and services on behalf of all the other components.  The `isTest`  attribute specifies that the hub will communicate with testnet ledgers.  Leave this attribute out for production deployments.  The `noCache` attribute asks the system not to cache credentials:  considering we use *remote-storage* to do that for us.   
-
-
-
-> To get your own `apiKey` for your application visit https://token.overhide.io/register.
->
-> Ensure to get the right key for your testnet app and a production key for your live app deployment.
 
 
 
